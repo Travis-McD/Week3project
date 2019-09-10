@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matching game part4</title>
+	<style type="text/css">	
+	#rightSide{
+		 border-left: 2px solid black;
+		 left: 500px; 
+	}
+	img{
+		position: absolute;
+	}
+	div{
+		position: absolute;
+        width:500px; height:500px;
+        background-color: lightblue;	
+    }
+    h1{
+        color: red;
+    }
+	</style>
+</head>
+<body id="theBody" >
+	<h1> MATCHING GAME</h1>
+    <ul><strong>Game Instructions</strong></ul>
+    <li> Find and Click the extra smiling face on the left </li>
+    <li> Do not Click on the right side</li>
+    <br>
+	<div id="leftSide"></div>
+	<div id="rightSide"></div>
+	<script type="text/javascript">	
+		 var numberOfFaces = 5;
+		 var theLeftSide = document.getElementById("leftSide");
+		 var theRightSide = document.getElementById("rightSide");
+		 var theBody = document.getElementById("theBody");
+		  function generateFaces(){
+		  	for(var i=1; i<=numberOfFaces; i++){
+		  		var image= document.createElement("img");
+		  		image.src= "https://learn.nucamp.co/pluginfile.php/783/mod_page/content/9/smile.png";
+		  		var randomNumerLeft = Math.floor(Math.random()*401);
+		  		var randomNumerTop = Math.floor(Math.random()*401);
+		  		image.style.top= randomNumerTop + "px";
+		  		image.style.left = randomNumerLeft + "px";
+		  		theLeftSide.appendChild(image);
+		  	}
+		  	var leftSideImages = theLeftSide.cloneNode(true);		  	
+		  	theLeftSide.lastChild.onclick=
+    		function nextLevel(event){
+        	event.stopPropagation();
+        	while(theLeftSide.firstChild){theLeftSide.removeChild(theLeftSide.firstChild);}
+        	while(theRightSide.firstChild){theRightSide.removeChild(theRightSide.firstChild);}
+        	numberOfFaces += 5;
+        	generateFaces(); };
+        	theBody.onclick = function gameOver() {
+   			 alert("Game Over!");
+    		theBody.onclick = null;
+    		theLeftSide.lastChild.onclick = null;
+    	};
+		  	leftSideImages.removeChild(leftSideImages.lastChild);
+		  	theRightSide.appendChild(leftSideImages);
+		  }		   
+		  window.onload = generateFaces();
+	</script>    
+</body>
+</html>
